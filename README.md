@@ -2,6 +2,9 @@ DİKKAT!
 Bu proje, https://github.com/aadesh0706/IOT-ESP32-Evil-Twin-WiFi-Hacking-Deauthentication-Captive-Portal projesinin Türkçeye çevirilmiş halidir.  
 Wifi adı : 1devlet2millet  
 Şifre : 128milyar  
+Ekstra Özellik :  
+16x2 LCD ekran  
+Pin Bağlantıları : SDA = G21 , SCL = G22  
 
 ---
 
