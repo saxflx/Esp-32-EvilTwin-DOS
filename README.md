@@ -1,5 +1,7 @@
 DİKKAT!  
-Bu proje, https://github.com/aadesh0706/IOT-ESP32-Evil-Twin-WiFi-Hacking-Deauthentication-Captive-Portal projesinin Türkçeye çevirilmiş halidir.
+Bu proje, https://github.com/aadesh0706/IOT-ESP32-Evil-Twin-WiFi-Hacking-Deauthentication-Captive-Portal projesinin Türkçeye çevirilmiş halidir.  
+Wifi adı : 1devlet2millet  
+Şifre : 128milyar  
 
 ---
 
